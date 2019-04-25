@@ -116,7 +116,6 @@ services:
     volumes:
         - ../artifacts/hosts/ORG/cli_hosts:/etc/hosts
 
-  # simple http server to disseminate certificates
   www.ORG.DOMAIN:
     extends:
       file: base-intercept.yaml
@@ -124,3 +123,8 @@ services:
     container_name: www.ORG.DOMAIN
     ports:
       - WWW_PORT:80
+    volumes:
+      - ../www:/usr/share/nginx/html:ro
+      - ../artifacts/nginx-ORG.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api.ORG.DOMAIN

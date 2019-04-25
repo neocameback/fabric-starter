@@ -378,6 +378,21 @@ function generatePeerArtifacts() {
     sed -e "s/PEER_EXTRA_HOSTS/$peer_extra_hosts/g" -e "s/CLI_EXTRA_HOSTS/$cli_extra_hosts/g" -e "s/API_EXTRA_HOSTS/$api_extra_hosts/g" -e "s/DOMAIN/$DOMAIN/g" -e "s/\([^ ]\)ORG/\1$org/g" -e "s/API_PORT/$api_port/g" -e "s/WWW_PORT/$www_port/g" -e "s/CA_PORT/$ca_port/g" -e "s/PEER0_PORT/$peer0_port/g" -e "s/PEER0_EVENT_PORT/$peer0_event_port/g" -e "s/PEER1_PORT/$peer1_port/g" -e "s/PEER1_EVENT_PORT/$peer1_event_port/g" ${compose_template} | awk '{gsub(/\[newline\]/, "\n")}1' > ${f}
     fi
 
+    # nginx proxy config
+    sed -e "s/DOMAIN/$DOMAIN/g" \
+        -e "s/ORG/$org/g" \
+        -e "s/API_PORT/${DEFAULT_API_PORT}/g" \
+        $TEMPLATES_ARTIFACTS_FOLDER/nginx.conf > $GENERATED_ARTIFACTS_FOLDER/"nginx-$org.conf"
+
+    # API configs
+    mkdir ${GENERATED_ARTIFACTS_FOLDER}/api-configs-${org}
+    sed -e "s/DOMAIN/$DOMAIN/g" \
+        -e "s/ORG/$org/g" \
+        $TEMPLATES_ARTIFACTS_FOLDER/api-configs/api.yaml > ${GENERATED_ARTIFACTS_FOLDER}/api-configs-${org}/api.yaml
+    sed -e "s/DOMAIN/$DOMAIN/g" \
+        -e "s/ORG/$org/g" \
+        $TEMPLATES_ARTIFACTS_FOLDER/api-configs/network.yaml > ${GENERATED_ARTIFACTS_FOLDER}/api-configs-${org}/network.yaml
+
     # fabric-ca-server-config yaml
     sed -e "s/ORG/$org/g" $TEMPLATES_ARTIFACTS_FOLDER/fabric-ca-server-configtemplate.yaml > $GENERATED_ARTIFACTS_FOLDER/"fabric-ca-server-config-$org.yaml"
 
@@ -1360,9 +1375,13 @@ elif [ "${MODE}" == "generate" ]; then
   setDockerVersions $file_base
   setDockerVersions $file_base_intercept
 
-  generatePeerArtifacts ${ORG1} 4000 8081 7054 7051 7053 7056 7058 5984
-  generatePeerArtifacts ${ORG2} 4001 8082 8054 8051 8053 8056 8058 6984
-  generatePeerArtifacts ${ORG3} 4002 8083 9054 9051 9053 9056 9058 7984
+
+
+
+  #                     org     api_port www_port ca_port peer0_port peer0_event_port peer1_port peer1_event_port couchdb_port
+  generatePeerArtifacts ${ORG1} 8081     4000     7054    7051       7053             7056       7058             5984
+  generatePeerArtifacts ${ORG2} 8082     4001     8054    8051       8053             8056       8058             6984
+  generatePeerArtifacts ${ORG3} 8083     4002     9054    9051       9053             9056       9058             7984
   generateOrdererDockerCompose ${ORG1}
   generateOrdererArtifacts
   #generateWait
