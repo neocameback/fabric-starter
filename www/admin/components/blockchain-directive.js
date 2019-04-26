@@ -106,6 +106,7 @@ angular.module('altrs.directive.blockchain', ['altrs.service.socket', 'altrs.ser
 
           function _blockHtml(block) {
             var tx = block && block.header && block.header.data_hash;
+            if (typeof (tx) == "undefined") tx = "   ";
             return $('<div class="block">' + tx.substr(0, 3) + '</div>')
                 .css({left: (blockCount * blockWidth)})
                 .click(_onBlockClick)
