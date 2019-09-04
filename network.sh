@@ -1401,6 +1401,8 @@ elif [ "${MODE}" == "generate-peer" ]; then # params: -o ORG -R true(optional- R
     generatePeerArtifacts ${ORG} ${API_PORT} ${WWW_PORT} ${CA_PORT} ${PEER0_PORT} ${PEER0_EVENT_PORT} ${PEER1_PORT} ${PEER1_EVENT_PORT}
   fi
 
+  generateNetworkConfig ${ORG1} ${ORG2} ${ORG3}
+  
   servePeerArtifacts ${ORG}
   #if [ -n "$REMOTE_ORG" ]; then
     addOrgToCliHosts ${ORG} "orderer" ${IP_ORDERER}
