@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 starttime=$(date +%s)
 
@@ -1402,7 +1403,7 @@ elif [ "${MODE}" == "generate-peer" ]; then # params: -o ORG -R true(optional- R
   fi
 
   generateNetworkConfig ${ORG1} ${ORG2} ${ORG3}
-  
+
   servePeerArtifacts ${ORG}
   #if [ -n "$REMOTE_ORG" ]; then
     addOrgToCliHosts ${ORG} "orderer" ${IP_ORDERER}
