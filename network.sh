@@ -767,7 +767,7 @@ function downloadChannelBlockFile() {
     docker-compose --file ${f} run --rm "cli.$org.$DOMAIN" bash -c "${c}"
 
     #workaround until orderer-based network is implemented
-    c="wget ${WGET_OPTS} http://www.$leader.$DOMAIN:$DEFAULT_WWW_PORT/$channel_name.block && chown -R $UID:$GID ."
+    c="wget ${WGET_OPTS} http://www.$leader.$DOMAIN:$DEFAULT_WWW_PORT/artifacts/$channel_name.block && chown -R $UID:$GID ."
     echo ${c}
     docker-compose --file ${f} run --rm "cli.$org.$DOMAIN" bash -c "${c}"
 }
