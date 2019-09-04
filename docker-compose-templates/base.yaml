@@ -51,7 +51,7 @@ services:
     working_dir: /etc/hyperledger/artifacts
 
   api-base:
-    image: dockeraltoros/fabric-rest:FABRIC_REST_VERSION
+    image: dockeraltoros/fabric-rest:0.13.0
     volumes:
      - ../artifacts:/usr/src/artifacts
     command: sh -c "npm start"
