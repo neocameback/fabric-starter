@@ -88,25 +88,6 @@ Organizations:
             - Host: peer0.ORG2.DOMAIN
               Port: 7051
 
-    - &ORG3
-        Name: ORG3MSP
-        ID: ORG3MSP
-        MSPDir: crypto-config/peerOrganizations/ORG3.DOMAIN/msp
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('ORG3MSP.member')"
-            Writers:
-                Type: Signature
-                Rule: "OR('ORG3MSP.member')"
-            Admins:
-                Type: Signature
-                Rule: "OR('ORG3MSP.admin')"
-        AnchorPeers:
-            - Host: peer0.ORG3.DOMAIN
-              Port: 7051
-
-
 ################################################################################
 #
 #   SECTION: Capabilities
@@ -317,7 +298,6 @@ Profiles:
                 Organizations:
                     - *ORG1
                     - *ORG2
-                    - *ORG3
     common:
         Consortium: SampleConsortium
         Application:
@@ -325,19 +305,9 @@ Profiles:
             Organizations:
                 - *ORG1
                 - *ORG2
-                - *ORG3
             Capabilities:
                 <<: *ApplicationCapabilities
 
-    ORG2-ORG3:
-        Consortium: SampleConsortium
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *ORG2
-                - *ORG3
-            Capabilities:
-                <<: *ApplicationCapabilities
     ORG1-ORG2:
         Consortium: SampleConsortium
         Application:
@@ -345,14 +315,5 @@ Profiles:
             Organizations:
                 - *ORG1
                 - *ORG2
-            Capabilities:
-                <<: *ApplicationCapabilities
-    ORG1-ORG3:
-        Consortium: SampleConsortium
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *ORG1
-                - *ORG3
             Capabilities:
                 <<: *ApplicationCapabilities
