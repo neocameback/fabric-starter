@@ -14,8 +14,8 @@ artifactsTemplatesFolder="artifact-templates"
 
 : ${DOMAIN:="tsd.com"}
 : ${IP_ORDERER:="127.0.0.1"}
-: ${ORG1:="nv"}
-: ${ORG2:="gs"}
+: ${ORG1:="gs"}
+: ${ORG2:="nv"}
 : ${PEER0:="peer0"}
 : ${PEER1:="peer1"}
 : ${MAIN_ORG:=${ORG1}}
